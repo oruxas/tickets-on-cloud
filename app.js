@@ -70,17 +70,29 @@ function initDBConnection() {
 			console.warn('Could not find Cloudant credentials in VCAP_SERVICES environment variable - data will be unavailable to the UI');
 		}
 	} else{
-		console.warn('VCAP_SERVICES environment variable not set - data will be unavailable to the UI');
 		// For running this app locally you can get your Cloudant credentials 
 		// from Bluemix (VCAP_SERVICES in "cf env" output or the Environment 
 		// Variables section for an app in the Bluemix console dashboard).
 		// Alternately you could point to a local database here instead of a 
 		// Bluemix service.
-		//dbCredentials.host = "REPLACE ME";
-		//dbCredentials.port = REPLACE ME;
-		//dbCredentials.user = "REPLACE ME";
-		//dbCredentials.password = "REPLACE ME";
-		//dbCredentials.url = "REPLACE ME";
+		dbCredentials.host = "1b2002ce-86d2-485d-8544-8b1176d03e78-bluemix.cloudant.com";
+		dbCredentials.port = 443;
+		dbCredentials.user = "1b2002ce-86d2-485d-8544-8b1176d03e78-bluemix";
+		dbCredentials.password = "3b640e2414f4458b0cae634db288bcc6ae6636d513306ff6a0f7a8b4147df8ec";
+		dbCredentials.url = "https://1b2002ce-86d2-485d-8544-8b1176d03e78-bluemix:3b640e2414f4458b0cae634db288bcc6ae6636d513306ff6a0f7a8b4147df8ec@1b2002ce-86d2-485d-8544-8b1176d03e78-bluemix.cloudant.com";
+		cloudant = require('cloudant')(dbCredentials.url);
+		
+		// check if DB exists if not create
+		// cloudant.db.create(dbCredentials.dbName, function (err, res) {
+		// 	if (err) { console.log('could not create db ', err); }
+		// });
+		
+		db = cloudant.use(dbCredentials.dbName);
+		if (db==null){
+			console.warn('VCAP_SERVICES environment variable not set - data will be unavailable to the UI');
+		}else{
+			console.warn('DB status: connected to ' + dbCredentials.dbName);
+		}
 	}
 }
 
