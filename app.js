@@ -24,9 +24,9 @@ var multipart = require('connect-multiparty')
 var multipartMiddleware = multipart();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('port', process.env.PORT || 3000); //sets port approperate to environment (3000 for localhost)
+app.set('views', __dirname + '/views'); //sets where all template files are located
+app.set('view engine', 'ejs'); //ejs is a view engine for javascript files
 app.engine('html', require('ejs').renderFile);
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -99,6 +99,41 @@ function initDBConnection() {
 initDBConnection();
 
 app.get('/', routes.index);
+
+function createTicketData(id, ticket_type, fitst_name, last_name, email, question, attachments) {
+	var responseData = {
+		id : id,
+		ticket_type : ticket_type,
+		first_name : first_name,
+		last_name : last_name,
+		email : email,
+		question : question,
+		attachments : []
+	};
+
+	attachments.forEach(function(item, index) {
+		var attachmentData = {
+			content_type : item.type,
+			key : item.key,
+			url : 'api/tickets/attach?id=' + id + '&key=' + item.key
+		};
+		responseData.attachments.push(attachmentData);
+	});
+	return responseData;
+};
+
+//Here Ticket refers to Document
+var saveTicket = function(){
+
+};
+
+app.post('/api/tickets/attach', multipartMiddleware, function(request, response) {
+
+	console.log("Upload File for Ticket Invoked..");
+	console.log('Request: ' + JSON.stringify(request.headers));
+
+
+});
 
 function createResponseData(id, name, value, attachments) {
 
