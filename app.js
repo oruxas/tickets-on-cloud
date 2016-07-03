@@ -135,6 +135,11 @@ app.post('/api/tickets/attach', multipartMiddleware, function(request, response)
 
 });
 
+app.post('/api/new-ticket/submit', function(request, response){
+	response.status(200).send('Ticket sibmited!');
+    console.log("A new ticket has been submitted.");
+});
+
 function createResponseData(id, name, value, attachments) {
 
 	var responseData = {

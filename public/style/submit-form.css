@@ -1,0 +1,42 @@
+form {
+	margin: 0 auto;
+	width: 400px;
+	padding: 1em;
+	border: 1px solid #CCC;
+	border-radius: 1em;
+}
+
+form div {
+	margin-top: 1em;
+}
+
+form label {
+	display: block;
+	width: 400px;
+	text-align: left;
+}
+
+form input, textarea {
+    /* To make sure that all text fields have the same font settings
+       By default, textareas have a monospace font */
+    font: 1em sans-serif;
+
+    /* To give the same size to all text field */
+    width: 350px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    /* To harmonize the look & feel of text field border */
+    border: 1px solid #999;
+		border-radius: 6px;
+}
+
+form textarea {
+    /*It does not work on all browsers */
+    resize: vertical;
+}
+
+form input:focus, textarea:focus {
+    /* To give a little highlight on active elements */
+    border-color: #0066cc;
+}
