@@ -76,9 +76,9 @@ app.controller('SubmitNewTicketController', function($scope, $http, $location, f
            method : "GET",
            url : "/api/test/server"
        }).then(function mySuccses(response){
-           console.log('Response status: ' + response);
+           console.log(response.data);
        }, function myError(response) {
-           console.log(response)
+           console.log(response.data)
        });
     };
 
