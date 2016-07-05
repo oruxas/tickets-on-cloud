@@ -25,13 +25,16 @@
         </div>
         <div>
             <label for="file">Please attach evidence or supplement material:</label>
-            <input type="text" id="file" ng-model="newTicket.file"/>
+            <input type="file" id="file" file-model="newTicket.file"/>
         </div>
         <div>
-            <input type="button" ng-click="submitForm(newTicket)" value="Submit"/>
+            <input type="button" ng-click="submitForm()" value="Submit"/>
         </div>
         <div>
             <p class="reset" ng-click="resetForm()">Reset</p>
+        </div>
+        <div>
+            <input type="button" ng-click="testServer()" value="Test server"/>
         </div>
         </form>
 	</div>

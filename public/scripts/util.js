@@ -85,6 +85,24 @@ function xhrPost(url, data, callback, errback){
 	xhr.send(objectToQuery(data));
 }
 
+function xhrPostForm(url, data, callback, errback){
+	var xhr = new createXHR();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4){
+			if(xhr.status == 200){
+				callback(parseJson(xhr.responseText));
+			}else{
+				errback('service not available');
+			}
+		}
+	};
+	xhr.timeout = 100000;
+	xhr.ontimeout = errback;
+	xhr.send(data);
+}
+
 function xhrDelete(url, callback, errback){	
 	var xhr = new createXHR();
 	xhr.open("DELETE", url, true);

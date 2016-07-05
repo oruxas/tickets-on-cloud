@@ -29,6 +29,7 @@ app.set('views', __dirname + '/views'); //sets where all template files are loca
 app.set('view engine', 'ejs'); //ejs is a view engine for javascript files
 app.engine('html', require('ejs').renderFile);
 app.use(logger('dev'));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride());
@@ -122,22 +123,19 @@ function createTicketData(id, ticket_type, fitst_name, last_name, email, questio
 	return responseData;
 };
 
-//Here Ticket refers to Document
-var saveTicket = function(){
-
-};
-
-app.post('/api/tickets/attach', multipartMiddleware, function(request, response) {
-
-	console.log("Upload File for Ticket Invoked..");
-	console.log('Request: ' + JSON.stringify(request.headers));
-
-
-});
+app.get('/api/test/server', function(request, response){
+	response.sendStatus(200);
+	response.end();
+	
+}); 
 
 app.post('/api/new-ticket/submit', function(request, response){
-	response.status(200).send('Ticket sibmited!');
-    console.log("A new ticket has been submitted.");
+	console.log('Upcoming request from: /api/new-ticket/submit');
+	console.log('Request: ' + JSON.stringify(request.headers));
+	console.log('Data:'+ JSON.stringify(request.data));
+	console.log('ending response...');
+	response.end();
+
 });
 
 function createResponseData(id, name, value, attachments) {

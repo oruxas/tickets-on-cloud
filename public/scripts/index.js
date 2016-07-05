@@ -6,6 +6,14 @@ var defaultItems = [
 	
 ];
 
+function sendForm(data){
+	xhrPostForm('api/new-ticket/submit', data, function(item){
+		console.log('Response: ' + item);
+		}, function(err){
+			console.error(err);
+		});
+};
+
 function loadItems(){
 	xhrGet(REST_DATA, function(data){
 		
