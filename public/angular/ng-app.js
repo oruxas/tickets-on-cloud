@@ -29,7 +29,7 @@ app.service('formSubmitService', ['$http', function($http){
 
         this.uploadToUrl = function(fd, url){
 
-            $http.post({
+            $http({
                 method : "POST",
                 url : url,
                 withCredentials: false,
@@ -64,10 +64,24 @@ app.controller('SubmitNewTicketController', function($scope, $http, $location, f
         var form = document.getElementsByName('submitNewTicketForm').item(0); 
         // submit form via Angular custom service
         var fd = new FormData(form);
-        formSubmitService.uploadToUrl(fd, 'api/new-ticket/submit');
-        
-        // submit form data via ajax 
-        // sendForm(formData);
+        // formSubmitService.uploadToUrl(fd, 'api/new-ticket/submit');
+
+        // Submit form data
+        var formData = {
+            firstName : $scope.newTicket.firstName,
+            secondName : $scope.newTicket.secondName,
+            email : $scope.newTicket.email
+        };
+        // Send 
+        $http({
+            method : "POST",
+            url : "api/new-ticket/submit",
+            data : formData
+        }).then(function (response){
+                console.log(response); // logs an object (with success message)
+            }, function(err){
+                console.log(err);
+            });
     };
 
     // test server
@@ -102,11 +116,11 @@ app.config(function($routeProvider) {
     when('/', {
         templateUrl: 'angular/views/SubmitForm.html',
         controller: 'SubmitNewTicketController'
-    }).
-    when('/ticketsBoard', {
-        templateUrl: 'angular/views/ticketsBoard.html',
-        controller: 'ticketsBoardController'
     });
+    // when('/ticketsBoard', {
+    //     templateUrl: 'angular/views/ticketsBoard.html',
+    //     controller: 'ticketsBoardController'
+    // });
     // otherwise({
     //     redirectTo: '/'
     // });
