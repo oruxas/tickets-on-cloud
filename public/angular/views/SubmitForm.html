@@ -1,39 +1,39 @@
 <div class="submit-section">
     <div class="container">	
 
-        <form class="submit-form" novalidate  name="submitNewTicketForm">
+        <form role="form" class="submit-form" novalidate  name="submitNewTicketForm">
         <h2 class="form-title"> Submit your ticket </h2>
-        <div>
+        <div class="form-group">
             <label for="ticketType">Please select the type of application:</label>
-            <input type="text" id="ticketType" ng-model="newTicket.ticketType"/>
+            <input type="text" class="form-control" id="ticketType" ng-model="newTicket.ticketType"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" ng-model="newTicket.firstName"/>
+            <input type="text" class="form-control" id="firstName" ng-model="newTicket.firstName"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" ng-model="newTicket.lastName"/>
+            <input type="text" class="form-control" id="lastName" ng-model="newTicket.lastName"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="email">Your e-mail:</label>
-            <input type="email" id="email" ng-model="newTicket.email" value="example@mail.com"/>
+            <input type="email" class="form-control" id="email" ng-model="newTicket.email" value="example@mail.com"/>
         </div>
-        <div>
+        <div class="form-group">
             <label for="question">Please describe your question:</label>
-            <textarea id="question" ng-model="newTicket.question"></textarea>
+            <textarea id="question" class="form-control" ng-model="newTicket.question"></textarea>
         </div>
-        <div>
+        <div class="form-group">
             <label for="file">Please attach evidence or supplement material:</label>
             <input type="file" id="file" file-model="newTicket.file"/>
         </div>
-        <div>
+        <div class="form-group">
             <input type="button" ng-click="submitForm()" value="Submit"/>
         </div>
-        <div>
+        <div class="form-group">
             <p class="reset" ng-click="resetForm()">Reset</p>
         </div>
-        <div>
+        <div class="form-group">
             <input type="button" ng-click="testServer()" value="Test server"/>
         </div>
         </form>
