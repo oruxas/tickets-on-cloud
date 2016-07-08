@@ -5,12 +5,6 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
-
-var cloudant // instance of cloudant 
-var dbCredentials = {
-	dbName : 'my_sample_db'
-};
-var mydb; // instance of initial db
 var shortid = require('shortid');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -19,10 +13,14 @@ var errorHandler = require('errorhandler');
 var multipart = require('connect-multiparty')
 var multipartMiddleware = multipart();
 
+//--------------------------------------
+// Let's go
+//--------------------------------------
+
 // create app
 var app = express();
 
-// set app environment
+// setup app environment
 app.set('port', process.env.PORT || 3000); //sets port approperate to environment (3000 for localhost)
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -37,7 +35,18 @@ if ('development' == app.get('env')) {
 	app.use(errorHandler());
 }
 
-// connection to Cloudant noSQL database
+var db; // data base variable
+var cloudant // instance of cloudant 
+var dbCredentials = {
+	dbName : 'my_sample_db'
+};
+
+// instantiate database (by default to db variable)
+initDBConnection();
+
+//--------------------------------------
+// Utilities
+//--------------------------------------
 function initDBConnection() {
 	
 	if(process.env.VCAP_SERVICES) {
@@ -61,11 +70,11 @@ function initDBConnection() {
 					if (err) { console.log('could not create db ', err); }
 				});
 				// use existing data base
-				mydb = cloudant.db.use(dbCredentials.dbName);
+				db = cloudant.db.use(dbCredentials.dbName);
 				break;
 			}
 		}
-		if(mydb==null){
+		if(db==null){
 			console.warn('Could not find Cloudant credentials in VCAP_SERVICES environment variable - data will be unavailable to the UI');
 		}
 	} else{
@@ -83,9 +92,9 @@ function initDBConnection() {
 		cloudant = require('cloudant')(dbCredentials.url);
 		
 		// use existing data base
-		mydb = cloudant.db.use(dbCredentials.dbName);
+		db = cloudant.db.use(dbCredentials.dbName);
 
-		if (mydb==null){
+		if (db==null){
 			console.warn('VCAP_SERVICES environment variable not set - data will be unavailable to the UI');
 		}else{
 			console.warn('DB status: connected to ' + dbCredentials.dbName);
@@ -95,10 +104,27 @@ function initDBConnection() {
 	cloudant.db.list(function(err, allDbs) {
 		console.log('All my databases: %s', allDbs.join(', '))
 	});
-}
+};
 
-// assigns initail database to mydb 
-initDBConnection();
+function createResponseData(id, name, ticketData, attachments) {
+	var responseData = {
+		id : id,
+		name : name,
+		ticketData : ticketData,
+		attachments : []
+	};
+
+	attachments.forEach (function(item, index) {
+		var attachmentData = {
+			content_type : item.type,
+			key : item.key,
+			url : '/api/tickets/attach?id=' + id + '&key=' + item.key
+		};
+		responseData.attachements.push(attachmentData);
+	});
+	
+	return responseData;
+};
 
 // Routing
 app.get('/', function(req, res){
@@ -111,21 +137,88 @@ app.get('/api/test/server', function(req, res){
 }); 
 
 app.post('/api/new-ticket/submit', function(req, res){
-	console.log('Data:'+ JSON.stringify(req.body));
+	console.log('[Server]: request data:'+ JSON.stringify(req.body));
 	var ticket = req.body;
 	// add unique id
 	ticket.id = shortid.generate();
-	// Save ticket to existing data base - mydb
-	mydb.insert(ticket, function(err, body){
+	// Push Ticket data to DB
+	var docName = 'Ticket';
+	var docDesc = 'A sample ticket';
+	db.insert({
+		name: docName,
+		value : docDesc,
+		data : ticket
+	},'', function(err, doc) {
 		if (err) {
-			return console.log('[my_sample_db] ', err.message);
+			console.log('[DB error]: ' + err);
+		} else {
+			console.log('[DB]: document inserted -> ' + JSON.stringify(doc));
+			res.send('Your ticket has been submited.'); // better to use Post/Redirect/Get pattern
 		}
-		console.log(body);
-	});
-
-	// Respond to client
-	res.status(200).send('Your ticket was submited successfully.'); // better to use Post/Redirect/Get pattern 
+	});// End document insert
 });
+
+app.get('/api/fetch/tickets', function(req, res){
+	
+	var docList = []; 
+	var count = 0;
+	// Query all documents from DB
+	console.log('[DB]: listing all documents...');
+	db.list(function(err, body){
+		if (err) {
+			console.log('[DB error] ' + err);
+		} 
+		else {
+			var len = body.rows.length;
+			console.log('[DB]: Success! Total of docs -> ' + len);
+			if (len == 0) {
+				res.send('No tickets found.');
+			} else {
+				// Fetch data of all Tickets
+				body.rows.forEach(function(document) {
+					db.get(document.id, { revs_info: false }, function(err, doc) {
+						if (err) {
+							console.log('[DB error]: ' + err);
+						} else {
+
+							if (doc['_attachments']) {
+
+								var attachments = [];
+								for(var attribute in doc['_attachments']){
+								
+									if(doc['_attachments'][attribute] && doc['_attachments'][attribute]['content_type']) {
+										attachments.push({"key": attribute, "type": doc['_attachments'][attribute]['content_type']});
+									}
+									console.log(attribute+": "+JSON.stringify(doc['_attachments'][attribute]));
+								}
+							
+								var responseData = createResponseData(
+									doc._id,
+									doc.name,
+									doc.data,
+									attachments);
+							} else {
+								var responseData = createResponseData(
+									doc._id,
+									doc.name,
+									doc.data,
+									[]);
+							}
+
+							docList.push(responseData);
+							count++;
+							if (count >= len) {
+								res.write(JSON.stringify(docList));
+								console.log('[Server]: ending response...');
+								res.end();
+							}	
+						}// end else
+					});// end db.get
+				});// end forEach
+			}// end else
+		}// end else
+	});// end db.list
+});// end app.get
 
 
 app.listen(app.get('port'), '0.0.0.0', function() {

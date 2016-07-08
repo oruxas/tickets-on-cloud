@@ -5,7 +5,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
 	<meta name="apple-mobile-web-app-capable" content="yes" />
-
+	
+	<!--jQuery from Google-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	
 	<!--Angular Scripts from cloudflare-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
@@ -29,7 +32,27 @@
 
 	</div>
 	<div class = "rightHalf">
-
+		<div class="container" ng-controller="TicketsBoardController">
+			<div>
+				<input type="button" ng-click="showAll()" value="Show all"/>
+			</div>
+			<h1>Submited Tickets</h1>
+			<!--Tickets loaded below -->
+			<table class='ticket-card' ng-repeat="ticket in allTickets">
+				<tr>
+					<th>Type: {{ ticket.ticketData.ticketType }} </th>
+					<th>ID: {{ ticket.ticketData.id }} </th>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr>
+					<td> {{ ticket.ticketData.firstName }} </td>
+					<td> {{ ticket.ticketData.lastName }} </td>
+					<td> {{ ticket.ticketData.email }} </td>
+					<td> {{ ticket.ticketData.question }} </td>
+				</tr>
+			</table>
+		</div>
 	</div>
 
 </body>

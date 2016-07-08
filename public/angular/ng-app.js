@@ -68,18 +68,23 @@ app.controller('SubmitNewTicketController', function($scope, $http, $location, f
 
         // Submit form data
         var formData = {
+            ticketType : $scope.newTicket.ticketType,
             firstName : $scope.newTicket.firstName,
-            secondName : $scope.newTicket.secondName,
-            email : $scope.newTicket.email
+            lastName : $scope.newTicket.lastName,
+            email : $scope.newTicket.email,
+            question : $scope.newTicket.question,
+            fileAttachment : []
         };
         // Send 
         $http({
             method : "POST",
             url : "api/new-ticket/submit",
             data : formData
-        }).then(function (response){
+        })
+            .success(function (response){
                 console.log(response); // logs an object (with success message)
-            }, function(err){
+            })
+            .error(function(err){
                 console.log(err);
             });
     };
@@ -102,8 +107,22 @@ app.controller('SubmitNewTicketController', function($scope, $http, $location, f
 Tickets Board Controller
 *********************************/
 
-app.controller('TicketsBoardController', function($scope, $http, $location){
-    
+app.controller('TicketsBoardController', function($rootScope,$scope, $http, $location){
+     // fetch data from server
+      // $scope.allTickets = [{"id":"9345ee372ee0a0849bfecec6c1ddaacb","key":"9345ee372ee0a0849bfecec6c1ddaacb","value":{"rev":"1-5e4c8294f0d570d000b375d12946500c"}},{"id":"cd6501edebce264f63fe76e8976d3ff9","key":"cd6501edebce264f63fe76e8976d3ff9","value":{"rev":"1-177f41076a7d91b9c64259b9bc26e27e"}}]
+    $scope.showAll = function(){
+       $http({
+           method : "GET",
+           url : "/api/fetch/tickets"
+       })
+        .success(function(response){
+            console.log(JSON.stringify(response));
+            $scope.allTickets = response;
+        })
+        .error(function(err){
+            console.log(err);
+        });
+    };
 });
 
 /*********************************
