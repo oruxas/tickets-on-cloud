@@ -22,37 +22,19 @@
 	<!--Angular Modules-->
     <script src="angular/ng-app.js"></script>
 
+	<!--Local styles-->
+	<link rel="stylesheet" href="styles/tickets-board.css">
+
 </head>
 <body ng-app="TicketsSupportApp">
-	<div class="row">
-		<div class="col-md-4">
-			<h1>Welcome to the IBP Support website</h1>
-			<p class="description">To get started see the Q&A section on the right side or submit a new question.</p>
+	<div class="container">
+		<h1>Welcome to the IBP Support website</h1>
+		<h3 class="description">Site is in development phase..</h3>
 
-			<div ng-view>
-			<!--Views loaded here via $routeProvider in public/angular/ng-app.js-->
-			</div>
+		<a href="#/submit/new-ticket">Submit new Ticket</a> or <a href="#/show/all-tickets">Show all submitions</a>
 
-		</div>
-		<div class="col-md-8">
-			<div class="container" ng-controller="TicketsBoardController">
-				<h2>Submited Tickets</h2>
-				<div>
-					<input type="button" class="btn btn-primary" ng-click="showAll()" value="Show all"/>
-				</div>
-				<!--Tickets loads in separate panels -->
-				<div class='panel-group' ng-repeat="ticket in allTickets">
-					<div class="panel panel-default">
-						<div class="panel-heading">Type: {{ ticket.ticketData.ticketType }} | ID: {{ ticket.ticketData.id }} </div>
-						<div class="panel-body">
-							<p>First name: {{ ticket.ticketData.firstName }} </p>
-							<p>Last name: {{ ticket.ticketData.lastName }} </p>
-							<p>E-mail: {{ ticket.ticketData.email }} </p>
-						</div>
-					</div>
-				<!--All panels end above-->
-				</div>
-			</div>
+		<div ng-view>
+		<!--Views loaded here via $routeProvider in public/angular/ng-app.js-->
 		</div>
 	</div>
 </body>

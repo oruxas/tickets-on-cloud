@@ -1,0 +1,37 @@
+.id {
+    font-weight: bold;
+}
+
+.question-box {
+    display: inline;
+    font-weight: bold;
+}
+
+
+.status-orange {
+    font-family: Sans-serif;
+    font: Arial;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    line-height: 32px;
+    max-width: 100px;
+    height: 32px;
+    background-color: #ff9900;
+}
+
+.status-orange {
+    background-color: #ff9900;
+}
+
+/*Custom alignments*/
+.left-side {
+    position: absolute;
+    right: 10px;
+    top: 4px;
+}
+
+/*makes any element stand out on hover*/
+.panel-heading:hover {
+    background-color: #bfbfbf;
+}

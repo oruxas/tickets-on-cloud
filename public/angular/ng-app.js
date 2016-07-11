@@ -123,6 +123,10 @@ app.controller('TicketsBoardController', function($rootScope,$scope, $http, $loc
             console.log(err);
         });
     };
+
+    $scope.expandTicket = function(){
+
+    };
 });
 
 /*********************************
@@ -132,15 +136,15 @@ Routing
 app.config(function($routeProvider) {
   $routeProvider.
     //Root
-    when('/', {
+    when('/submit/new-ticket', {
         templateUrl: 'angular/views/SubmitForm.html',
         controller: 'SubmitNewTicketController'
+    }).
+    when('/show/all-tickets', {
+        templateUrl: 'angular/views/TicketsBoard.html',
+        controller: 'TicketsBoardController'
+    }).
+    otherwise({
+        redirectTo: '/'
     });
-    // when('/ticketsBoard', {
-    //     templateUrl: 'angular/views/ticketsBoard.html',
-    //     controller: 'ticketsBoardController'
-    // });
-    // otherwise({
-    //     redirectTo: '/'
-    // });
 });

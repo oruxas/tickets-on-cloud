@@ -1,7 +1,52 @@
+<!--Loads all tickets in separate panels-->
 
-<div class="tickets-board">
-    <h1>Submited Tickets</h1>
-    <ul >
-        <li ng-repeat="ticket in allTickets"> {{ ticket.id }} {{ ticket.firstName }} </li>
-    </ul>
+<div class="container">
+    <h2>Submited Tickets</h2>
+    <div>
+        <input type="button" class="btn btn-primary" ng-click="showAll()" value="Show all"/>
+    </div>
+    <!--panel group -->
+    <div class='panel-group' ng-repeat="ticket in allTickets">
+        <div class="panel panel-default">
+            <div class="panel-heading" ng-click="expandTicket()">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <h5 class="id">ID: {{ ticket.ticketData.id }}</h5>
+                        <h5 class="status-orange">NEW</h5>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3 class="question-box">Question: {{ ticket.ticketData.question }} </h3> <span class="badge left-side">2 answers</span>
+                    </div>
+                    <div class="col-sm-2">
+                        Last update: --not implemented yet--
+                    </div>
+                </div>
+            </div>
+            <div ng-show="headerClicked">
+                <div class="form-group">
+                    <label for="answer">respond with answer:</label>
+                    <textarea id="question" class="form-control" ng-model="newTicket.question"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="button" ng-click="submitAnswer()" value="Submit answer"/>
+                </div>
+            </div>	
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-2">
+                        Category (type): {{ ticket.ticketData.ticketType }}
+                    </div>
+                    <div class="col-sm-4">
+                        Raised by: {{ ticket.ticketData.firstName }} {{ ticket.ticketData.lastName }}
+                    </div>
+                    <div class="col-sm-4">
+                        Assigned to: --not implemented yet--
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-success"> Move to Q&A </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--end panel-group container-->
 </div>
