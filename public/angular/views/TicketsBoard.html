@@ -6,6 +6,14 @@
         <input type="button" class="btn btn-primary" ng-click="showAll()" value="Show all"/>
     </div>
     <!--panel group -->
+    <uib-accordion close-others="oneAtATime">
+        <uib-accordion-group heading="Meta info from database (click to expand)" ng-repeat="ticket in allTickets">
+        Document ID: {{ticket.id}} <br>
+        Document name: {{ticket.name}} <br>
+        Attachments: {{ticket.attachments}} <br>
+        </uib-accordion-group>
+    <uib-accordion>
+
     <div class='panel-group' ng-repeat="ticket in allTickets">
         <div class="panel panel-default">
             <div class="panel-heading" ng-click="expandTicket()">
