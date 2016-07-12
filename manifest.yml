@@ -2,7 +2,7 @@ applications:
 - path: .
   memory: 512M
   instances: 1
-  domain: mybluemix.net
+  domain: w3ibm.mybluemix.net
   name: tickets-eimantas
   host: tickets-eimantas
   disk_quota: 1024M
