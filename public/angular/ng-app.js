@@ -1,7 +1,7 @@
 /*********************************
 TicketSupportApp
 *********************************/
-var app = angular.module('TicketsSupportApp', ['ngRoute', 'ui.bootstrap', 'ngAnimate']);
+var app = angular.module('TicketsSupportApp', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'infinite-scroll']);
 
 /*********************************
 Custom directive for file handling
@@ -107,25 +107,43 @@ app.controller('SubmitNewTicketController', function($scope, $http, $location, f
 Tickets Board Controller
 *********************************/
 
-app.controller('TicketsBoardController', function($rootScope,$scope, $http, $location){
-     // fetch data from server
-      // $scope.allTickets = [{"id":"9345ee372ee0a0849bfecec6c1ddaacb","key":"9345ee372ee0a0849bfecec6c1ddaacb","value":{"rev":"1-5e4c8294f0d570d000b375d12946500c"}},{"id":"cd6501edebce264f63fe76e8976d3ff9","key":"cd6501edebce264f63fe76e8976d3ff9","value":{"rev":"1-177f41076a7d91b9c64259b9bc26e27e"}}]
-    $scope.showAll = function(){
-       $http({
+app.controller('TicketsBoardController', function($scope, $http, $location){
+    //initialization
+    var ticketsCount = 0;
+    var last = 0;
+    angular.element(document).ready(function(){
+        $http({
            method : "GET",
            url : "/api/fetch/tickets"
        })
         .success(function(response){
             console.log(JSON.stringify(response));
             $scope.allTickets = response;
+            ticketsCount = $scope.allTickets.length;
+                if (ticketsCount) {
+                    $scope.tickets = [$scope.allTickets[0]];
+                } else {
+                    console.log('There is no tickets in the db.')
+                }
         })
         .error(function(err){
             console.log(err);
         });
+    });
+
+    //show more on scroll
+    $scope.loadMore = function(){
+        if (last < ticketsCount) {
+            last = $scope.tickets.length;
+            for(var i = 1; i<= 1; i++) {
+                $scope.tickets.push($scope.allTickets[last]);
+            }
+        }
     };
 
-    $scope.expandTicket = function(){
-
+    $scope.submitAnswer = function(ticketID){
+        console.log(ticketID);
+        console.log($scope.ticket.answer);
     };
 });
 

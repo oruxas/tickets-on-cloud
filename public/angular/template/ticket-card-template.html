@@ -1,0 +1,25 @@
+<div class="panel {{panelClass || 'panel-default'}}" controller="TicketsBoardController">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+            <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <h5 class="id">ID: {{ ticket.ticketData.id }}</h5>
+                        <h5 class="status-orange">NEW</h5>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3 class="question-box"> Question: {{ heading }} {{ ticket.ticketData.question }} </h3> <span class="badge left-side">2 answers</span>
+                    </div>
+                    <div class="col-sm-2">
+                        Last update: --not implemented yet--
+                    </div>
+                </div>
+            </span>
+          </a>
+        </h4>
+    </div>
+    <div class="panel-collapse collapse" uib-collapse="!isOpen">
+    <div class="panel-body" style="text-align: right" ng-transclude></div>
+    </div>
+</div>
