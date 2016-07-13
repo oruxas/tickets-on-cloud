@@ -12,6 +12,9 @@
     width: 66.66%;
 }
 
+.sub-answer span{
+    font-weight: bold;
+}
 
 .status-orange {
     font-family: Sans-serif;

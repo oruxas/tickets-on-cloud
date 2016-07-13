@@ -111,22 +111,31 @@ app.controller('TicketsBoardController', function($scope, $http, $location){
     //initialization
     var ticketsCount = 0;
     var last = 0;
-    angular.element(document).ready(function(){
+    $scope.answState = [];
+
+    angular.element(document).ready(function() {
         $http({
            method : "GET",
            url : "/api/fetch/tickets"
        })
-        .success(function(response){
+        .success(function(response) {
             console.log(JSON.stringify(response));
             $scope.allTickets = response;
             ticketsCount = $scope.allTickets.length;
                 if (ticketsCount) {
                     $scope.tickets = [$scope.allTickets[0]];
+                    for (var i = 0; i < ticketsCount; i++) {
+                        if ($scope.allTickets[i].data.answer.text != "") {
+                            $scope.answState.push(true);
+                        } else {
+                            $scope.answState.push(false);
+                        }
+                    }
                 } else {
                     console.log('There is no tickets in the db.')
                 }
         })
-        .error(function(err){
+        .error(function(err) {
             console.log(err);
         });
     });
@@ -140,10 +149,27 @@ app.controller('TicketsBoardController', function($scope, $http, $location){
             }
         }
     };
+    $scope.showScope = function(e) {
+        console.log(angular.element(e.srcElement).scope());
+    };
 
-    $scope.submitAnswer = function(ticketID){
-        console.log(ticketID);
-        console.log($scope.ticket.answer);
+    $scope.submitAnswer = function(index){
+        //take modification
+        var ticket = $scope.allTickets[index];
+        //send ticket update req to server
+        $http({
+            method : "PUT",
+            url : "api/update/ticket/",
+            data : ticket
+        })
+            .success(function (response){
+                //show answer
+                $scope.answState[index] = true;
+            })
+            .error(function(err){
+                console.log(err);
+            });
+
     };
 });
 

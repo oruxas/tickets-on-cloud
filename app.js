@@ -106,11 +106,12 @@ function initDBConnection() {
 	});
 };
 
-function createResponseData(id, name, ticketData, attachments) {
+function createResponseData(id, rev, name, ticketData, attachments) {
 	var responseData = {
-		id : id,
+		_id : id,
+		_rev : rev,
 		name : name,
-		ticketData : ticketData,
+		data : ticketData,
 		attachments : []
 	};
 
@@ -141,6 +142,8 @@ app.post('/api/new-ticket/submit', function(req, res){
 	var ticket = req.body;
 	// add unique id
 	ticket.id = shortid.generate();
+	// add answer prop
+	ticket.answer = {text: ''};
 	// Push Ticket data to DB
 	var docName = 'Ticket';
 	var docDesc = 'A sample ticket';
@@ -194,12 +197,14 @@ app.get('/api/fetch/tickets', function(req, res){
 							
 								var responseData = createResponseData(
 									doc._id,
+									doc._rev,
 									doc.name,
 									doc.data,
 									attachments);
 							} else {
 								var responseData = createResponseData(
 									doc._id,
+									doc._rev,
 									doc.name,
 									doc.data,
 									[]);
@@ -220,6 +225,18 @@ app.get('/api/fetch/tickets', function(req, res){
 	});// end db.list
 });// end app.get
 
+app.put('/api/update/ticket', function(req, res){
+	console.log('[Server]: managing update request with data:'+ JSON.stringify(req.body));
+	var ticket = req.body;
+	db.insert(ticket, function(err, doc) {
+		if (err) {
+			console.log('[DB error]: ' + err);
+		} else {
+			console.log('[DB]: document updated -> ' + JSON.stringify(doc));
+			res.status(200).end();
+		}
+	});// End document update
+});
 
 app.listen(app.get('port'), '0.0.0.0', function() {
 	console.log('Express app listening on port ' + app.get('port'));
