@@ -10,8 +10,11 @@
 .answer-container{
     margin: auto;
     width: 66.66%;
+    color: black;
 }
-
+p {
+    color: black;
+}
 .sub-answer span{
     font-weight: bold;
 }

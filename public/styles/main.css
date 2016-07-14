@@ -1,0 +1,23 @@
+body,html {
+	background-color: #3b4b54;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light",
+		"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	color: #ffffff;
+    height: 100%;
+}
+
+/* header footer common */
+header, footer {
+    background-color: #26343F;
+	color: #ffffff;
+}
+/* colors */
+.description {
+	color: #41D6C3;
+}
+footer {
+  /*position: absolute;*/
+  float:bottom;
+  /*bottom: 0;*/
+  width: 100%;
+}

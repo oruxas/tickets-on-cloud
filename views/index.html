@@ -19,32 +19,45 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-route.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-aria.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-messages.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-touch.min.js"></script>
 
 	<!--UI Bootstrap library-->
 	<script type="text/javascript" src="angular/modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
 	<script type="text/javascript" src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.3.3.js"></script>
 
+	<!-- Angular Material Library -->
+	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+	
 	<!--utilities-->
 	<script type="text/javascript" src="angular/modules/infinite-scroll-min.js"></script>
+	<script type="text/javascript" src="/angular-input-modified/dist/angular-input-modified.js"></script>
+
 
 	<!--Angular Modules-->
     <script src="angular/ng-app.js"></script>
 
 	<!--Local styles-->
+	<link rel="stylesheet" href="styles/main.css">
 	<link rel="stylesheet" href="styles/tickets-board.css">
 
 </head>
 <body ng-app="TicketsSupportApp">
-	<div class="container">
-		<h1>Welcome to the IBP Support website</h1>
-		<h3 class="description">Site is in development phase..</h3>
 
-		<a href="#/submit/new-ticket">Submit new Ticket</a> or <a href="#/show/all-tickets">Show all submitions</a>
+	<header class="container-fluid">
+		<h1 class="title">Welcome to the IBP Support website</h1>
+		<h3 class="description">Site is in development phase..</h3> <a href="#/submit/new-ticket">Submit new Ticket</a> or <a href="#/show/all-tickets">Show all submitions</a>
+	</header>
 
+	<div class="container-fluid">
 		<div ng-view>
 		<!--Views loaded here via $routeProvider in public/angular/ng-app.js-->
 		</div>
 	</div>
+
+	<footer class="container-fluid text-center">
+  		<p>Powered by Node.js</p>
+	</footer>
 </body>
 </html>

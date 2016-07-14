@@ -29,6 +29,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(path.join(__dirname, 'bower_components')));
 
 // for development only
 if ('development' == app.get('env')) {
@@ -142,8 +143,12 @@ app.post('/api/new-ticket/submit', function(req, res){
 	var ticket = req.body;
 	// add unique id
 	ticket.id = shortid.generate();
-	// add answer prop
-	ticket.answer = {text: ''};
+	ticket.status = 'New';
+	ticket.lastUpdate = '';
+	// add answer properties
+	ticket.answer = {
+		text : 'not answered yet.',
+		newText : ''};
 	// Push Ticket data to DB
 	var docName = 'Ticket';
 	var docDesc = 'A sample ticket';
@@ -233,7 +238,7 @@ app.put('/api/update/ticket', function(req, res){
 			console.log('[DB error]: ' + err);
 		} else {
 			console.log('[DB]: document updated -> ' + JSON.stringify(doc));
-			res.status(200).end();
+			res.status(200).send(doc.rev);
 		}
 	});// End document update
 });

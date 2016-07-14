@@ -34,14 +34,24 @@
                     <div class="sub-answer" ng-show='answState[$index]'>
                             <p> <span>Answer:</span> {{ ticket.data.answer.text }}</p>
                         </div>
-                    <div class="form-group">
-                        <label for="answer">respond with answer:</label>
-                        <textarea id="answer" class="form-control" ng-model="ticket.data.answer.text"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="button" ng-click="submitAnswer($index, ticket.data.answer.text)" value="Submit answer"/>
-                    </div>
-                    <a ng-click="showScope($event)">show scope</a>
+                    <form name="ticketAnswer">
+                        <div class="form-group">
+                            <label for="answer">respond with answer:</label>
+                            <textarea
+                                id="answer" 
+                                name="answer"
+                                class="form-control" 
+                                ng-model="ticket.data.answer.newText"
+                                required
+                            ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="button"
+                                ng-click="submitAnswer($index, ticket.data.answer.newText)"
+                                value="Submit answer"/>
+                        </div>
+                    </form>
                 </div>
             </uib-accordion-group>
             <!--Ticket footer part-->

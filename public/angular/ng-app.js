@@ -1,7 +1,7 @@
 /*********************************
 TicketSupportApp
 *********************************/
-var app = angular.module('TicketsSupportApp', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'infinite-scroll']);
+var app = angular.module('TicketsSupportApp', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'infinite-scroll', 'ngInputModified']);
 
 /*********************************
 Custom directive for file handling
@@ -153,9 +153,11 @@ app.controller('TicketsBoardController', function($scope, $http, $location){
         console.log(angular.element(e.srcElement).scope());
     };
 
-    $scope.submitAnswer = function(index){
-        //take modification
-        var ticket = $scope.allTickets[index];
+    $scope.submitAnswer = function(index, newText){
+        //copy and make modification
+        var ticket = angular.copy($scope.allTickets[index]);
+        ticket.data.answer.text = newText;
+        ticket.data.answer.newText = '';
         //send ticket update req to server
         $http({
             method : "PUT",
@@ -164,7 +166,11 @@ app.controller('TicketsBoardController', function($scope, $http, $location){
         })
             .success(function (response){
                 //show answer
+                console.log("response: ", response);
                 $scope.answState[index] = true;
+                $scope.allTickets[index].data.answer.text = newText;
+                $scope.allTickets[index].data.answer.newText = '';
+                $scope.allTickets[index]._rev = response;
             })
             .error(function(err){
                 console.log(err);

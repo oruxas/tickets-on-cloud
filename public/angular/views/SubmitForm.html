@@ -1,41 +1,64 @@
-<div class="submit-section">
-    <div class="container">	
+<div class="row">
+    <div class="col-md-offset-2 col-md-8">
+        <form role="form" class="form-horizontal" novalidate  name="submitNewTicketForm">
 
-        <form role="form" class="submit-form" novalidate  name="submitNewTicketForm">
-        <h2 class="form-title"> Submit your ticket </h2>
-        <div class="form-group">
-            <label for="ticketType">Please select the type of application:</label>
-            <input type="text" class="form-control" id="ticketType" ng-model="newTicket.ticketType"/>
-        </div>
-        <div class="form-group">
-            <label for="firstName">First Name:</label>
-            <input type="text" class="form-control" id="firstName" ng-model="newTicket.firstName"/>
-        </div>
-        <div class="form-group">
-            <label for="lastName">Last Name:</label>
-            <input type="text" class="form-control" id="lastName" ng-model="newTicket.lastName"/>
-        </div>
-        <div class="form-group">
-            <label for="email">Your e-mail:</label>
-            <input type="email" class="form-control" id="email" ng-model="newTicket.email" value="example@mail.com"/>
-        </div>
-        <div class="form-group">
-            <label for="question">Please describe your question:</label>
-            <textarea id="question" class="form-control" ng-model="newTicket.question"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="file">Please attach evidence or supplement material:</label>
-            <input type="file" id="file" file-model="newTicket.file"/>
-        </div>
-        <div class="form-group">
-            <input type="button" ng-click="submitForm()" value="Submit"/>
-        </div>
-        <div class="form-group">
-            <p class="reset" ng-click="resetForm()">Reset</p>
-        </div>
-        <div class="form-group">
-            <input type="button" ng-click="testServer()" value="Test server"/>
-        </div>
+            <h1 class="md-title">Submit new ticket</h1>
+
+            <div class="form-group">
+                <label for="ticketType" class="col-md-4 control-label">
+                    Please select one:
+                </label>
+                <div class="col-md-8">
+                    <input type="text" id="ticketType" class="form-control" ng-model="newTicket.ticketType"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class="col-md-4 control-label">
+                    First Name:
+                </label>
+                <div class="col-md-8">
+                    <input type="text" id="firstName" class="form-control" ng-model="newTicket.firstName"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastName" class="col-md-4 control-label">
+                    Last Name:
+                </label>
+                <div class="col-md-8">
+                    <input type="text" id="lastName" class="form-control" ng-model="newTicket.lastName"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-md-4 control-label">
+                    Your e-mail:
+                </label>
+                <div class="col-md-8">
+                    <input type="email" id="email" class="form-control" ng-model="newTicket.email" value="example@mail.com"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="question" class="col-md-4 control-label">
+                    Please describe your question:
+                </label>
+                <div class="col-md-8">
+                    <textarea rows="3" id="question" class="form-control" ng-model="newTicket.question"/>
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <label for="file" class="col-sm-2 control-label">
+                    Please attach evidence or supplement material:
+                </label>
+                <div class="col-sm-10">
+                    <button type="button" id="file" class="btn btn-default" file-model="newTicket.file">Browse</button>
+                </div>
+            </div>-->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-primary" ng-click="submitForm()" value="Submit">Submit</button>
+                    <span class="reset" ng-click="resetForm()">Reset fields</span>
+                </div>
+            </div>
+
         </form>
-	</div>
+    </div>
 </div>
