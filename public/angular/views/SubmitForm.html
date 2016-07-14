@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
-        <form role="form" class="form-horizontal" novalidate  name="submitNewTicketForm">
+        <form role="form" class="form-horizontal" name="submitNewTicketForm" data-toggle="validator" novalidate>
 
             <h1 class="md-title">Submit new ticket</h1>
 
             <div class="form-group">
                 <label for="ticketType" class="col-md-4 control-label">
-                    Please select one:
+                    Please select type:
                 </label>
                 <div class="col-md-8">
-                    <input type="text" id="ticketType" class="form-control" ng-model="newTicket.ticketType" required/>
+                    <input type="text" id="ticketType" class="form-control" placeholder="Select from list" ng-model="newTicket.ticketType" required/>
                 </div>
             </div>
             <div class="form-group">
@@ -33,7 +33,7 @@
                     Your e-mail:
                 </label>
                 <div class="col-md-8">
-                    <input type="email" id="email" class="form-control" ng-model="newTicket.email" value="example@mail.com"/>
+                    <input type="email" id="email" class="form-control" placeholder="full address" data-error="Bruh, that email address is invalid" ng-model="newTicket.email" required/>
                 </div>
             </div>
             <div class="form-group">
