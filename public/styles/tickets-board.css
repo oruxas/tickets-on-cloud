@@ -1,3 +1,8 @@
+/*Override bs text color*/
+.panel-group{
+    color: black;
+}
+
 .id {
     font-weight: bold;
 }
@@ -10,11 +15,8 @@
 .answer-container{
     margin: auto;
     width: 66.66%;
-    color: black;
 }
-p {
-    color: black;
-}
+
 .sub-answer span{
     font-weight: bold;
 }
