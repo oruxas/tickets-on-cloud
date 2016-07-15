@@ -1,7 +1,8 @@
 /*********************************
 TicketSupportApp
 *********************************/
-var app = angular.module('TicketsSupportApp', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'infinite-scroll']);
+
+var app = angular.module('TicketsSupportApp', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
 
 /*********************************
 Custom directive for file handling
