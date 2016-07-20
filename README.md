@@ -6,3 +6,5 @@ The Node.js Cloudant Starter demonstrates how to use the Bluemix Cloudant NoSQL 
 
 * See app.js for how to obtain and use the Cloudant credentials as well as the file CRUD API
 * See public/scripts/index.js and public/scripts/util.js for how the front-end calls the back-end API
+
+//bkkvkjvk
